@@ -5,10 +5,12 @@ const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
 let btn = document.getElementById('btn');
 
 //On clicking the search button; the value of the input field should be stored in a variable and passed onto the function dispWeather() as a name of the city;
-btn.addEventListener('click', ()=>{
+function showWeather(){
     let inputVal = document.querySelector('.search input').value;
     dispWeather(inputVal);
-})
+    let content = document.getElementById("content");
+    if(content.classList.contains('hidden')) content.classList.remove('hidden')
+}
 
 //Getting the details via API
 async function dispWeather(city) {
@@ -27,4 +29,10 @@ async function dispWeather(city) {
     
     //Displaying the widn speed of the city
     document.querySelector(".wind").innerHTML = data.wind.speed + "kmPh";
+
+    //Changing the pictures of the weather
+    if(data.weather[0].main == 'Clouds') document.querySelector(".result img").src = "images/clouds.png"
+    else if(data.weather[0].main == 'Haze') document.querySelector(".result img").src = "images/clear.png"
+    else if(data.weather[0].main == 'Mist') document.querySelector(".result img").src = "images/mist.png"
+    else if(data.weather[0].main == 'Rain') document.querySelector(".result img").src = "images/rain.png"
 }
